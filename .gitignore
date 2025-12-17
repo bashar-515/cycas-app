@@ -1,0 +1,5 @@
+#directories
+/bin/
+
+# files
+/etc/docker/login-client.pat
