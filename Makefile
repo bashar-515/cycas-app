@@ -1,17 +1,17 @@
 include make/gen.mk
 
-.PHONY: up
+.PHONY: up-dev
 
-up:
+up-dev:
 	docker run --interactive \
 		--tty \
 		--rm \
-    	--workdir /app \
-    	--env air_wd=/app \
-    	--volume $(PWD):/app \
-    	--publish 8000:8000 \
-    	cosmtrek/air \
-    	-c .air.toml
+    --workdir /app \
+    --env air_wd=/app \
+    --volume $(PWD):/app \
+    --publish 8000:8000 \
+    cosmtrek/air \
+    -c .air.toml
 
 .PHONY: up-auth down-auth clean-auth
 
@@ -34,5 +34,3 @@ clean-auth:
 		down \
 		--remove-orphans \
 		--volumes
-
-
