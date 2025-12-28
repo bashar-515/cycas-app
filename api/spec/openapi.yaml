@@ -37,9 +37,9 @@ paths:
                   - name
                   - id
                 properties:
-                  id:
-                    type: string
                   name:
+                    type: string
+                  id:
                     type: string
 
         "409":
