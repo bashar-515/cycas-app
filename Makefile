@@ -1,3 +1,5 @@
+include make/gen.mk
+
 .PHONY: up
 
 up:
@@ -33,7 +35,4 @@ clean-auth:
 		--remove-orphans \
 		--volumes
 
-.PHONY: bump
 
-bump:
-	go get github.com/bashar-515/cycas-api@main
