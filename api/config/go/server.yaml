@@ -2,4 +2,4 @@ package: api
 generate:
   std-http-server: true
   strict-server: true
-output: ../../../gen/api/server.go
+output: gen/api/server.go

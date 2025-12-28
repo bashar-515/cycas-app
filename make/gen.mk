@@ -1,18 +1,22 @@
-.PHONY: gen gen-server gen-models setup-gen
+.PHONY: gen gen-server gen-models setup-gen tidy
 
-gen: gen-models gen-server gen-spec
+GEN := go tool oapi-codegen
+
+SPEC := api/spec/openapi.yaml
+CFG_DIR := api/config/go
+
+gen: gen-models gen-server gen-spec tidy
 
 gen-models: setup-gen
-	go tool oapi-codegen -config api/config/go/models.yaml api/spec/openapi.yaml && \
-		go mod tidy
+	$(GEN) -config $(CFG_DIR)/models.yaml $(SPEC)
 
 gen-server: setup-gen
-	go tool oapi-codegen -config api/config/go/server.yaml api/spec/openapi.yaml && \
-		go mod tidy
+	$(GEN) -config $(CFG_DIR)/server.yaml $(SPEC)
 
 gen-spec: setup-gen
-	go tool oapi-codegen -config api/config/go/spec.yaml api/spec/openapi.yaml && \
-		go mod tidy
+	$(GEN) -config $(CFG_DIR)/spec.yaml $(SPEC)
 
-setup-gen:
+setup-gen: tidy
+
+tidy:
 	go mod tidy
