@@ -35,8 +35,8 @@ func main() {
 	
 	<-ctx.Done()
 
-	shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+	shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer shutdownCancel()
 
 	if err = srv.Shutdown(shutdownCtx); err != nil {
 		log.Fatalf("error shutting server down: %v", err)
