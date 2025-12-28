@@ -2,16 +2,16 @@
 
 gen: gen-models gen-server gen-spec
 
-gen-models: gen-setup
-	go tool oapi-codegen -config api/config/go-models-cfg.yaml api/spec/openapi.yaml && \
+gen-models: setup-gen
+	go tool oapi-codegen -config api/config/go/models.yaml api/spec/openapi.yaml && \
 		go mod tidy
 
-gen-server: gen-setup
-	go tool oapi-codegen -config api/config/go-server-cfg.yaml api/spec/openapi.yaml && \
+gen-server: setup-gen
+	go tool oapi-codegen -config api/config/go/server.yaml api/spec/openapi.yaml && \
 		go mod tidy
 
-gen-spec: gen-setup
-	go tool oapi-codegen -config api/config/go/go-spec-cfg.yaml api/spec/openapi.yaml && \
+gen-spec: setup-gen
+	go tool oapi-codegen -config api/config/go/spec.yaml api/spec/openapi.yaml && \
 		go mod tidy
 
 setup-gen:
