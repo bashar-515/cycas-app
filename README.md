@@ -12,3 +12,7 @@
 1. Start the local environment by running `make dev`.
 2. ^C alone does not kill the entirely "undo" `make dev`. `make dev` starts the Vite development server in the foreground and a few
 containers--for authentication--in the background. Kill these containers using `make auth-down`.
+
+## TODO
+1. Add Playwright tests.
+2. Add unit and component Vitest tests.
