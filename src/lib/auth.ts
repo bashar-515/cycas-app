@@ -9,5 +9,3 @@ const authConfig = {
   response_node: 'query',
   code_challenge_method: 'S256',
 };
-
-export default authConfig;
