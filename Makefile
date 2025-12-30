@@ -4,7 +4,7 @@ include make/auth.mk
 .PHONY: dev setup
 
 dev: auth-up
-	npm run dev
+	pnpm run dev --open
 
 setup:
 	npm install
