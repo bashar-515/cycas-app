@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"codeberg.org/cycas/app/src/lib/server"
+	"codeberg.org/cycas/app/app/lib/server"
 )
 
 func main() {
