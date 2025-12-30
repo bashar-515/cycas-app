@@ -1,20 +1,20 @@
-.PHONY: up-auth down-auth clean-auth
+.PHONY: auth-up auth-down auth-clean
 
-up-auth:
-	docker compose \
+auth-up:
+	podman compose \
 		--file etc/docker/docker-compose.yaml \
 		up \
 		--detach \
 		--wait
 
-down-auth:
-	docker compose \
+auth-down:
+	podman compose \
 		--file etc/docker/docker-compose.yaml \
 		down \
 		--remove-orphans
 
-clean-auth:
-	docker compose \
+auth-clean:
+	podman compose \
 		--file etc/docker/docker-compose.yaml \
 		down \
 		--remove-orphans \
