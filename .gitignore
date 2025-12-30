@@ -29,6 +29,7 @@ dist-ssr
 /tmp/
 
 # files
+/etc/docker/login-client.pat
 .env*
 
 !.env*.template
