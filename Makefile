@@ -1,10 +1,9 @@
-include make/gen.mk
 include make/auth.mk
+include make/gen.mk
+include make/web.mk
 
-.PHONY: dev setup
+.PHONY: up
 
-dev: auth-up
-	pnpm run dev --open
+up: auth-up web-up
 
-setup:
-	npm install
+down: auth-down
