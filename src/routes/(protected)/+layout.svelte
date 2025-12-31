@@ -6,6 +6,7 @@
 
 	onMount(async () => {
 		if (!(await isSignedIn())) {
+      // TODO: [q] does this need to be awaited?
 			await signIn();
 
 			return;

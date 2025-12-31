@@ -8,6 +8,7 @@ import {
 
 let _userManager: UserManager | null = null;
 
+// TODO: [q] do I need to add logic ensuring that this function only executes in browsers?
 export function getUserManager(): UserManager {
 	if (!_userManager) {
 		_userManager = new UserManager({

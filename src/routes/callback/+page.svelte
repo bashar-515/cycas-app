@@ -1,22 +1,19 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
   import { getUserManager } from '$lib/auth/user-manager';
-
-  let err = '';
+  import { signIn } from '$lib/auth/auth';
 
   onMount(async () => {
+    const userManager = getUserManager();
+
     try {
-      await getUserManager().signinRedirectCallback();
-      window.location.href = '/';
-    } catch (e) {
-      err = e instanceof Error ? e.message : String(e);
-      console.error(e);
+      await userManager.signinRedirectCallback();
+      await goto('/');
+    } catch {
+      await userManager.removeUser();
+
+      signIn();
     }
   });
 </script>
-
-{#if err}
-  <pre>{err}</pre>
-{:else}
-  Signing in...
-{/if}
