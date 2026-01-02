@@ -14,5 +14,8 @@
 containers--for authentication--in the background. Kill these containers using `make auth-down`.
 
 ## TODO
+1. After a user signs in, they are always redirected to the app's homepage (@ '/'). We should preserve the path they're trying to access
+and redirect them there.
+
 1. Add Playwright tests.
 2. Add unit and component Vitest tests.
