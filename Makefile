@@ -1,10 +1,11 @@
 include make/auth.mk
 include make/backend.mk
+include make/db.mk
 include make/web.mk
 
-.PHONY: up
+.PHONY: up down
 
-up: auth-up
-	$(MAKE) -j web-up backend-up
+up: auth-up db-up
+	$(MAKE) -j backend-up web-up
 
-down: auth-down
+down: db-down auth-down
