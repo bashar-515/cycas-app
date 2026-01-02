@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { signOut } from '$lib/auth/auth';
   import '$lib/script';
+  import { signOut } from '$lib/auth/auth';
 </script>
 
 <div>
