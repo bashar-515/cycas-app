@@ -13,6 +13,7 @@
     } catch {
       await userManager.removeUser();
 
+      // TODO: [q] does this need to be awaited?
       signIn();
     }
   });
