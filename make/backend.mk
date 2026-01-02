@@ -1,10 +1,11 @@
-.PHONY: backend-up
+.PHONY: backend-up setup-backend
+ 
+backend-up: setup-backend
+	go tool air
 
-backend-up:
+setup-backend: gen tidy
 
-###################################
-
-.PHONY: gen gen-server gen-models setup-gen tidy
+.PHONY: gen gen-server gen-models setup-gen
 
 GEN := go tool oapi-codegen
 
@@ -23,6 +24,8 @@ gen-spec: setup-gen
 	$(GEN) -config $(CFG_DIR)/spec.yaml $(SPEC_FILE)
 
 setup-gen: tidy
+
+.PHONY: tidy
 
 tidy:
 	go mod tidy

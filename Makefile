@@ -4,6 +4,7 @@ include make/web.mk
 
 .PHONY: up
 
-up: auth-up web-up
+up: auth-up
+	$(MAKE) -j web-up backend-up
 
 down: auth-down

@@ -3,7 +3,7 @@
 AUTH := podman compose
 COMPOSE_FILE := etc/docker/docker-compose.yaml
 
-auth-up: auth-setup
+auth-up: setup-auth
 	$(AUTH) \
 		--file $(COMPOSE_FILE) \
 		up \
