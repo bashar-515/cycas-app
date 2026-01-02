@@ -1,3 +1,9 @@
+.PHONY: backend-up
+
+backend-up:
+
+###################################
+
 .PHONY: gen gen-server gen-models setup-gen tidy
 
 GEN := go tool oapi-codegen

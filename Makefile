@@ -1,5 +1,5 @@
 include make/auth.mk
-include make/gen.mk
+include make/backend.mk
 include make/web.mk
 
 .PHONY: up
