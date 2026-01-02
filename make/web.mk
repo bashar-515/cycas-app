@@ -1,7 +1,7 @@
 .PHONY: web-up setup-web
 
 web-up: setup-web
-	pnpm run dev --open
+	npm run dev
 
 setup-web:
 	pnpm install

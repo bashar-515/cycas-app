@@ -1,26 +1,29 @@
-.PHONY: auth-up auth-down auth-clean auth-setup
+.PHONY: auth-up auth-down auth-clean setup-auth
+
+AUTH := podman compose
+COMPOSE_FILE := etc/docker/docker-compose.yaml
 
 auth-up: auth-setup
-	podman compose \
-		--file etc/docker/docker-compose.yaml \
+	$(AUTH) \
+		--file $(COMPOSE_FILE) \
 		up \
 		--detach \
 		--wait
 
 auth-down:
-	podman compose \
-		--file etc/docker/docker-compose.yaml \
+	$(AUTH) \
+		--file $(COMPOSE_FILE) \
 		down \
 		--remove-orphans
 
 auth-clean:
-	podman compose \
-		--file etc/docker/docker-compose.yaml \
+	$(AUTH) \
+		--file $(COMPOSE_FILE) \
 		down \
 		--remove-orphans \
 		--volumes
 
-auth-setup:
-	podman compose \
-		--file etc/docker/docker-compose.yaml \
+setup-auth:
+	$(AUTH) \
+		--file $(COMPOSE_FILE) \
 		pull
