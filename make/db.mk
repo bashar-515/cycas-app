@@ -15,7 +15,7 @@ db-up:
 	fi
 
 db-down:
-	podman stop $(CONTAINER_NAME)
+	podman stop --ignore $(CONTAINER_NAME)
 
 db-clean:
-	podman rm $(CONTAINER_NAME)
+	podman rm --ignore $(CONTAINER_NAME)
