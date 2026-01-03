@@ -4,7 +4,7 @@
 
 ### Dependencies
 1. Go
-2. Node & pnpm
+2. Node+pnpm
 3. Podman
 
 ### First Run
