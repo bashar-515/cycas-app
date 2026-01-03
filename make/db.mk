@@ -1,9 +1,9 @@
-.PHONY: db-up db-down db-clean setup-db
+.PHONY: db-up db-down db-clean
 
 CONTAINER_NAME := cycas-db
 IMAGE_NAME := postgres
 
-db-up: setup-db
+db-up:
 	@if podman container exists $(CONTAINER_NAME); then \
 		podman start $(CONTAINER_NAME); \
 	else \
@@ -20,6 +20,3 @@ db-down:
 
 db-clean:
 	podman rm --ignore $(CONTAINER_NAME)
-
-setup-db:
-	podman pull $(IMAGE_NAME)
