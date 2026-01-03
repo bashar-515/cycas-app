@@ -10,6 +10,8 @@ import (
 type ctxKey int
 
 const (
+ 	AuthorizationHeaderKey = "Authorization"
+
 	CtxKeySub ctxKey = iota
 )
 

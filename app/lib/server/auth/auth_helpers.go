@@ -8,8 +8,6 @@ import (
 )
 
 const (
- 	AuthorizationHeaderKey = "Authorization"
-
 	bearerPrefix = "Bearer "
 )
 
