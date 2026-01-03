@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/oapi-codegen/nethttp-middleware"
 
 	"codeberg.org/cycas/app/gen/api"
@@ -31,9 +32,18 @@ func (s *Server) Handler() (http.Handler, error) {
 	}
 
 	handler := api.Handler(api.NewStrictHandler(s, []api.StrictMiddlewareFunc{}))
-	options := nethttpmiddleware.Options{SilenceServersWarning: true }
+	options := nethttpmiddleware.Options{
+		SilenceServersWarning: true,
+		Options: openapi3filter.Options{
+			AuthenticationFunc: authenticate,
+		},
+	}
 
 	return nethttpmiddleware.OapiRequestValidatorWithOptions(swagger, &options)(handler), nil
+}
+
+func (s *Server) Ping(ctx context.Context, request api.PingRequestObject) (api.PingResponseObject, error) {
+	return api.Ping200TextResponse("Hello, World!"), nil
 }
 
 func (s *Server) CreateCategory(

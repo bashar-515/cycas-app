@@ -7,7 +7,22 @@ info:
 servers:
   - url: http://localhost:8000
 
+security:
+  - bearerAuth: []
+
 paths:
+  /v1/ping:
+    get:
+      operationId: ping
+      responses:
+        "200":
+          description: Ping recieved
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ping
+
   /v1/categories:
     post:
       operationId: createCategory
@@ -50,6 +65,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     ErrorResponse:
       type: object
