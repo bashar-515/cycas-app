@@ -10,17 +10,17 @@ import (
 	"codeberg.org/cycas/app/gen/api"
 )
 
-type Database interface {
+type Store interface {
 	CreateCategory()
 }
 
 type Server struct{
-	database Database
+	database Store
 }
 
-func NewServer(database Database) *Server {
+func NewServer(store Store) *Server {
 	return &Server{
-		database: database,
+		database: store,
 	}
 }
 

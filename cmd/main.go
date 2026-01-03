@@ -13,7 +13,7 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 
 	"codeberg.org/cycas/app/app/lib/server"
-	"codeberg.org/cycas/app/app/lib/database/postgres"
+	"codeberg.org/cycas/app/app/lib/store/postgres"
 )
 
 func main() {
@@ -25,13 +25,13 @@ func main() {
 		// TODO: handle case
 	}
 
-	db, err := postgres.New(ctx, connString)
+	store, err := postgres.New(ctx, connString)
 	if err != nil {
 		// TODO: handle error
 	}
-	defer db.Close()
+	defer store.Close()
 
-	handler, err := server.NewServer(db).Handler()
+	handler, err := server.NewServer(store).Handler()
 	if err != nil {
 		log.Fatalf("error getting server handler: %v", err)
 	}
