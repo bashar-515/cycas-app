@@ -12,6 +12,7 @@
 2. navigate to the Zitadel console at `http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost`, and use the password
 "Password1!" to log in; then, create a [_User Agent_](https://zitadel.com/docs/guides/manage/console/applications#user-agent) application.
 Go through the initialization wizard; refer to `.env.example` when filling in redirect URI's and whatnot
+
 4. replace the OIDC client ID found in `.env.example` with the client ID of your newly created Zitadel app. Copy the contents of
 `.env.example` into a new `.env`
 
@@ -25,6 +26,5 @@ all the containers started by `make up`
 1. after a user signs in, they are always redirected to the app's homepage (@ '/'). We should preserve the path they're trying to access
 and redirect them there
 
-
-1. add Playwright tests
-2. add unit and component Vitest tests
+2. add Playwright tests
+3. add unit and component Vitest tests
