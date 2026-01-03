@@ -8,12 +8,15 @@ import (
 	"github.com/getkin/kin-openapi/openapi3filter"
 )
 
-const bearerPrefix = "Bearer "
+const (
+	authorizationHeaderKey = "Authorization"
+	bearerPrefix = "Bearer "
+)
 
 func authenticate(ctx context.Context, input *openapi3filter.AuthenticationInput) error {
 	req := input.RequestValidationInput.Request
 
-	authHeader := req.Header.Get("Authorization")
+	authHeader := req.Header.Get(authorizationHeaderKey)
 	if authHeader == "" {
 		// TODO: handle case
 		fmt.Println("Authorization missing")

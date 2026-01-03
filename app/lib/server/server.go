@@ -7,6 +7,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/oapi-codegen/nethttp-middleware"
+	"github.com/rs/cors"
 
 	"codeberg.org/cycas/app/gen/api"
 )
@@ -39,7 +40,13 @@ func (s *Server) Handler() (http.Handler, error) {
 		},
 	}
 
-	return nethttpmiddleware.OapiRequestValidatorWithOptions(swagger, &options)(handler), nil
+	cors := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:5173"},
+		AllowedMethods: []string{http.MethodGet},
+		AllowedHeaders: []string{authorizationHeaderKey},
+	})
+
+	return cors.Handler(nethttpmiddleware.OapiRequestValidatorWithOptions(swagger, &options)(handler)), nil
 }
 
 func (s *Server) Ping(ctx context.Context, request api.PingRequestObject) (api.PingResponseObject, error) {
