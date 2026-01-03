@@ -2,12 +2,16 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/jackc/pgx/v5"
+	_ "github.com/joho/godotenv/autoload"
 
 	"codeberg.org/cycas/app/app/lib/server"
 )
@@ -16,7 +20,20 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
 
-	handler, err := server.NewServer().Handler()
+	connString, ok := os.LookupEnv("CYCAS_DATABASE_URL")
+	if !ok {
+		// TODO: handle case
+	}
+
+	fmt.Println(connString)
+
+	conn, err := pgx.Connect(ctx, connString)
+	if err != nil {
+		// TODO: handle error
+	}
+	defer conn.Close(context.Background())
+
+	handler, err := server.NewServer(conn).Handler()
 	if err != nil {
 		log.Fatalf("error getting server handler: %v", err)
 	}

@@ -5,15 +5,20 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/oapi-codegen/nethttp-middleware"
 
 	"codeberg.org/cycas/app/gen/api"
 )
 
-type Server struct{}
+type Server struct{
+	conn *pgx.Conn
+}
 
-func NewServer() *Server {
-	return &Server{}
+func NewServer(conn *pgx.Conn) *Server {
+	return &Server{
+		conn: conn,
+	}
 }
 
 func (s *Server) Handler() (http.Handler, error) {

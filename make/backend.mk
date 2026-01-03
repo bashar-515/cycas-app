@@ -10,7 +10,7 @@ setup-backend: gen tidy
 GEN := go tool oapi-codegen
 
 SPEC_FILE := api/spec/openapi.yaml
-CFG_DIR := api/config/go
+CFG_DIR := api/config/server
 
 gen: gen-models gen-server gen-spec tidy
 
