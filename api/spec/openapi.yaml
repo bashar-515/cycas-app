@@ -21,7 +21,7 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: ping
+                example: Hello, World!
 
   /v1/categories:
     post:
