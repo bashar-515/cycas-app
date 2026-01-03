@@ -1,17 +1,26 @@
 # Cycas App
 
 ## Local Development
-### First Run
-1. Run `make auth-up` to set up the authentication service.
-2. Navigate to the Zitadel console at [http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost]
-(http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost), and use the password "Password1!" to log in; then, create a
-["User Agent"](https://zitadel.com/docs/guides/manage/console/applications#user-agent) application.
-3. Copy the application values listed in the '.env.development.template' file into a new '.env.development' file at the root.
 
-### `make dev`
-1. Start the local environment by running `make dev`.
-2. ^C alone does not kill the entirely "undo" `make dev`. `make dev` starts the Vite development server in the foreground and a few
-containers--for authentication--in the background. Kill these containers using `make auth-down`.
+### Dependencies
+1. Go
+2. Node & pnpm
+3. Podman
+
+### First Run
+1. run `make auth-up` to set up the authentication service
+2. navigate to the Zitadel console at [http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost]
+(http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost), and use the password "Password1!" to log in; then, create a
+["User Agent"](https://zitadel.com/docs/guides/manage/console/applications#user-agent) application. Go through the initialization wizard;
+refer to '.env.example' when filling in redirect URI's and whatnot.
+4. replace the OIDC client ID found in '.env.example' with the client ID of your newly created Zitadel app. Copy the contents of
+'.env.example' into a new '.env'
+
+### `make up`
+1. start the local environment by running `make up`.
+2. ^C alone does not kill or entirely "undo" `make up`. `make up` starts a database container and some authentication containers in the
+background. In the foreground, it starts a development server to serve the frontend and launches the Go backend server. `make down` stops
+all the containers started by `make up`
 
 ## TODO
 1. After a user signs in, they are always redirected to the app's homepage (@ '/'). We should preserve the path they're trying to access

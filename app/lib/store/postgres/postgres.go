@@ -25,8 +25,10 @@ func New(ctx context.Context, connString string) (*Postgres, error) {
 	}, nil
 }
 
-func (d *Postgres) Close() {
-	d.pool.Close()
+func (p *Postgres) Init() {}
+
+func (p *Postgres) Close() {
+	p.pool.Close()
 }
 
 func (d *Postgres) CreateCategory() {}
