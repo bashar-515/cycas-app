@@ -3,14 +3,15 @@ package server
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/oapi-codegen/nethttp-middleware"
 	"github.com/rs/cors"
 
-	"codeberg.org/cycas/app/gen/api"
 	"codeberg.org/cycas/app/app/lib/server/auth"
+	"codeberg.org/cycas/app/gen/api"
 )
 
 type Store interface {
@@ -51,6 +52,13 @@ func (s *Server) Handler() (http.Handler, error) {
 }
 
 func (s *Server) Ping(ctx context.Context, request api.PingRequestObject) (api.PingResponseObject, error) {
+	v := ctx.Value(auth.CtxKeySub)
+	sub, ok := v.(string)
+	if !ok {
+		fmt.Println("no sub")
+	}
+
+	fmt.Println(sub)
 	return api.Ping200TextResponse("Hello, World!"), nil
 }
 

@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/getkin/kin-openapi/openapi3filter"
 )
@@ -9,7 +10,7 @@ import (
 type ctxKey int
 
 const (
-	ctxKeySub ctxKey = iota
+	CtxKeySub ctxKey = iota
 )
 
 func Authenticate(ctx context.Context, input *openapi3filter.AuthenticationInput) error {
@@ -25,7 +26,9 @@ func Authenticate(ctx context.Context, input *openapi3filter.AuthenticationInput
 		// TODO: handle error
 	}
 
-	input.RequestValidationInput.Request = req.WithContext(context.WithValue(req.Context(), ctxKeySub, sub))
+	fmt.Println(sub)
+
+	input.RequestValidationInput.Request = req.WithContext(context.WithValue(req.Context(), CtxKeySub, sub))
 
 	return nil
 }
