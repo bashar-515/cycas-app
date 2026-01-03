@@ -1,5 +1,5 @@
 import * as Cycas from '@beeesho/cycas';
-import { getUserManager } from './auth/user-manager';
+import { getUserManager } from '$lib/auth/user-manager';
 import { PUBLIC_CYCAS_API_URI } from '$env/static/public';
 
 let _api: Cycas.DefaultApi | null = null;
