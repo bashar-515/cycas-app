@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -10,10 +9,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/jackc/pgx/v5"
+
 	_ "github.com/joho/godotenv/autoload"
 
 	"codeberg.org/cycas/app/app/lib/server"
+	"codeberg.org/cycas/app/app/lib/database/postgres"
 )
 
 func main() {
@@ -25,15 +25,13 @@ func main() {
 		// TODO: handle case
 	}
 
-	fmt.Println(connString)
-
-	conn, err := pgx.Connect(ctx, connString)
+	db, err := postgres.New(ctx, connString)
 	if err != nil {
 		// TODO: handle error
 	}
-	defer conn.Close(context.Background())
+	defer db.Close()
 
-	handler, err := server.NewServer(conn).Handler()
+	handler, err := server.NewServer(db).Handler()
 	if err != nil {
 		log.Fatalf("error getting server handler: %v", err)
 	}
@@ -46,6 +44,7 @@ func main() {
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			// TODO: don't call `log.Fatalf` in this Go routine; instead, use a cancel the context to trigger shutdown
 			log.Fatalf("error listening and serving: %v", err)
 		}
 	}()

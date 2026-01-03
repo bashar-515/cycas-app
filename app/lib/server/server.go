@@ -5,19 +5,22 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/jackc/pgx/v5"
 	"github.com/oapi-codegen/nethttp-middleware"
 
 	"codeberg.org/cycas/app/gen/api"
 )
 
-type Server struct{
-	conn *pgx.Conn
+type Database interface {
+	CreateCategory()
 }
 
-func NewServer(conn *pgx.Conn) *Server {
+type Server struct{
+	database Database
+}
+
+func NewServer(database Database) *Server {
 	return &Server{
-		conn: conn,
+		database: database,
 	}
 }
 
