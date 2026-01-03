@@ -22,8 +22,9 @@ background. In the foreground, it starts a development server to serve the front
 all the containers started by `make up`
 
 ## TODO
-1. After a user signs in, they are always redirected to the app's homepage (@ '/'). We should preserve the path they're trying to access
+1. after a user signs in, they are always redirected to the app's homepage (@ '/'). We should preserve the path they're trying to access
 and redirect them there
 
-1. Add Playwright tests
-2. Add unit and component Vitest tests
+
+1. add Playwright tests
+2. add unit and component Vitest tests
