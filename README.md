@@ -10,7 +10,7 @@
 ### First Run
 1. run `make auth-up` to set up the authentication service
 2. navigate to the Zitadel console at `http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost`, and use the password
-"Password1!" to log in; then, create a ["User Agent"](https://zitadel.com/docs/guides/manage/console/applications#user-agent) application.
+"Password1!" to log in; then, create a "[User Agent](https://zitadel.com/docs/guides/manage/console/applications#user-agent)" application.
 Go through the initialization wizard; refer to '.env.example' when filling in redirect URI's and whatnot.
 4. replace the OIDC client ID found in '.env.example' with the client ID of your newly created Zitadel app. Copy the contents of
 '.env.example' into a new '.env'
