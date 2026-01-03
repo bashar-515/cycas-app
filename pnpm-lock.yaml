@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@beeesho/cycas':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.4
+        version: 0.0.4
       oidc-client-ts:
         specifier: ^3.4.1
         version: 3.4.1
@@ -84,8 +84,8 @@ importers:
 
 packages:
 
-  '@beeesho/cycas@0.0.2':
-    resolution: {integrity: sha512-GypetAg45YD5rR8NH1MPv1zpY4FGymWHJIODtrwDg3cK9UKvUKsUWwBL2ot8PrjiSeIbLL+COaqL4GTa6SaIYw==}
+  '@beeesho/cycas@0.0.4':
+    resolution: {integrity: sha512-INLguUlTyc9b/0SLK7KA02jYN3AIp63dTDNY6UVYWuwtc+qD8H0jjLoSCugBn6EURxIJOEEQ/liQQQXZVXX9sw==}
 
   '@esbuild/aix-ppc64@0.27.2':
     resolution: {integrity: sha512-GZMB+a0mOMZs4MpDbj8RJp4cw+w1WV5NYD6xzgvzUJ5Ek2jerwfO2eADyI6ExDSUED+1X8aMbegahsJi+8mgpw==}
@@ -1319,7 +1319,7 @@ packages:
 
 snapshots:
 
-  '@beeesho/cycas@0.0.2':
+  '@beeesho/cycas@0.0.4':
     dependencies:
       es6-promise: 4.2.8
       whatwg-fetch: 3.6.20

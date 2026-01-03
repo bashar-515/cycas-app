@@ -41,7 +41,7 @@
 		"vitest-browser-svelte": "^2.0.1"
 	},
 	"dependencies": {
-		"@beeesho/cycas": "^0.0.2",
+		"@beeesho/cycas": "^0.0.4",
 		"oidc-client-ts": "^3.4.1"
 	}
 }
