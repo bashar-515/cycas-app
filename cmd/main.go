@@ -31,8 +31,6 @@ func main() {
 	}
 	defer store.Close()
 
-	store.Init()
-
 	handler, err := server.NewServer(store).Handler()
 	if err != nil {
 		log.Fatalf("error getting server handler: %v", err)

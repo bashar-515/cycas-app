@@ -25,8 +25,6 @@ func New(ctx context.Context, connString string) (*Postgres, error) {
 	}, nil
 }
 
-func (p *Postgres) Init() {}
-
 func (p *Postgres) Close() {
 	p.pool.Close()
 }
