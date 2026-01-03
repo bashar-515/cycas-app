@@ -20,6 +20,8 @@ export function getApi(): Cycas.DefaultApi {
 									return '';
 								}
 
+                console.log(user?.access_token);
+
 								return user?.access_token;
 							}
 						}

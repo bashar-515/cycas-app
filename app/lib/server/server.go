@@ -10,6 +10,7 @@ import (
 	"github.com/rs/cors"
 
 	"codeberg.org/cycas/app/gen/api"
+	"codeberg.org/cycas/app/app/lib/server/auth"
 )
 
 type Store interface {
@@ -36,14 +37,14 @@ func (s *Server) Handler() (http.Handler, error) {
 	options := nethttpmiddleware.Options{
 		SilenceServersWarning: true,
 		Options: openapi3filter.Options{
-			AuthenticationFunc: authenticate,
+			AuthenticationFunc: auth.Authenticate,
 		},
 	}
 
 	cors := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:5173"},
 		AllowedMethods: []string{http.MethodGet},
-		AllowedHeaders: []string{authorizationHeaderKey},
+		AllowedHeaders: []string{auth.AuthorizationHeaderKey},
 	})
 
 	return cors.Handler(nethttpmiddleware.OapiRequestValidatorWithOptions(swagger, &options)(handler)), nil
