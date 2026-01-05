@@ -7,7 +7,7 @@
 		const api = getApi();
 		const res = await api.ping();
 
-        console.log(res);
+    console.log(res);
 	});
 </script>
 
