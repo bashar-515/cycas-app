@@ -20,3 +20,6 @@ db-down:
 
 db-clean:
 	podman rm --ignore $(CONTAINER_NAME)
+
+.PHONY: migrate
+	go run ./cmd/migrate

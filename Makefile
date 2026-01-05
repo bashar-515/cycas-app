@@ -5,7 +5,7 @@ include make/web.mk
 
 .PHONY: up down
 
-up: auth-up db-up
+up: auth-up db-up migrate
 	$(MAKE) -j backend-up web-up
 
 down: db-down auth-down
