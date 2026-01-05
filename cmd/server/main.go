@@ -10,8 +10,9 @@ import (
 	"time"
 
 	"codeberg.org/cycas/app/internal/config"
-	"codeberg.org/cycas/app/internal/server"
+	"codeberg.org/cycas/app/internal/service"
 	"codeberg.org/cycas/app/internal/store/postgres"
+	"codeberg.org/cycas/app/internal/transport"
 )
 
 func main() {
@@ -29,7 +30,9 @@ func main() {
 	}
 	defer store.Close()
 
-	handler, err := server.NewServer(store).Handler()
+	svc := service.NewService(store)
+
+	handler, err := transport.NewHandler(svc)
 	if err != nil {
 		log.Fatalf("error getting server handler: %v", err)
 	}
