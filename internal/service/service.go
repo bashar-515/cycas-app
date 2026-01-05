@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"codeberg.org/cycas/app/gen/api"
-	"codeberg.org/cycas/app/internal/transport/middleware/auth"
+	"codeberg.org/cycas/app/internal/session"
 	"codeberg.org/cycas/app/internal/store"
 )
 
@@ -21,7 +21,7 @@ func NewService(st store.Store) api.StrictServerInterface {
 }
 
 func (s *Service) Ping(ctx context.Context, request api.PingRequestObject) (api.PingResponseObject, error) {
-	v := ctx.Value(auth.CtxKeySub)
+	v := ctx.Value(session.CtxKeySub)
 	sub, ok := v.(string)
 	if !ok {
 		fmt.Println("no sub")
