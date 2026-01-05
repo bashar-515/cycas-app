@@ -20,7 +20,7 @@ func main() {
 
 	cfg, err := config.Load()
 	if err != nil {
-		// TODO: handle error
+		log.Fatalf("error loading config: %v", err)
 	}
 
 	store, err := postgres.New(ctx, cfg.DatabaseUrl)
