@@ -1,0 +1,2 @@
+DROP FUNCTION IF EXISTS auth.user_id();
+DROP SCHEMA IF EXISTS auth;
