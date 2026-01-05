@@ -5,14 +5,14 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"codeberg.org/cycas/app/app/lib/server"
+	"codeberg.org/cycas/app/internal/store"
 )
 
 type Postgres struct {
 	pool *pgxpool.Pool
 }
 
-var _ server.Store = (*Postgres)(nil)
+var _ store.Store = (*Postgres)(nil)
 
 func New(ctx context.Context, connString string) (*Postgres, error) {
 	pool, err := pgxpool.New(ctx, connString)

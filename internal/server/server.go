@@ -10,19 +10,16 @@ import (
 	"github.com/oapi-codegen/nethttp-middleware"
 	"github.com/rs/cors"
 
-	"codeberg.org/cycas/app/app/lib/server/auth"
 	"codeberg.org/cycas/app/gen/api"
+	"codeberg.org/cycas/app/internal/server/middleware/auth"
+	"codeberg.org/cycas/app/internal/store"
 )
 
-type Store interface {
-	CreateCategory()
-}
-
 type Server struct{
-	database Store
+	database store.Store
 }
 
-func NewServer(store Store) *Server {
+func NewServer(store store.Store) *Server {
 	return &Server{
 		database: store,
 	}

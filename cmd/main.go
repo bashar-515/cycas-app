@@ -12,8 +12,8 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 
-	"codeberg.org/cycas/app/app/lib/server"
-	"codeberg.org/cycas/app/app/lib/store/postgres"
+	"codeberg.org/cycas/app/internal/server"
+	"codeberg.org/cycas/app/internal/store/impl/postgres"
 )
 
 func main() {
