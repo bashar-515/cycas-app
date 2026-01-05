@@ -6,15 +6,12 @@ import (
 	"net/http"
 	"strings"
 
+	"codeberg.org/cycas/app/internal/session"
 	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type ctxKey int
-
 const (
-	CtxKeySub ctxKey = iota
-
  	AuthorizationHeaderKey = "Authorization"
 
 	bearerPrefix = "Bearer "
@@ -35,7 +32,7 @@ func Authenticate(ctx context.Context, input *openapi3filter.AuthenticationInput
 
 	fmt.Println(sub)
 
-	input.RequestValidationInput.Request = req.WithContext(context.WithValue(req.Context(), CtxKeySub, sub))
+	input.RequestValidationInput.Request = req.WithContext(context.WithValue(req.Context(), session.CtxKeySub, sub))
 
 	return nil
 }
