@@ -39,13 +39,13 @@ func (s *Server) Handler() (http.Handler, error) {
 		},
 	}
 
-	cors := cors.New(cors.Options{
+	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:5173"},
 		AllowedMethods: []string{http.MethodGet},
 		AllowedHeaders: []string{auth.AuthorizationHeaderKey},
 	})
 
-	return cors.Handler(nethttpmiddleware.OapiRequestValidatorWithOptions(swagger, &options)(handler)), nil
+	return c.Handler(nethttpmiddleware.OapiRequestValidatorWithOptions(swagger, &options)(handler)), nil
 }
 
 func (s *Server) Ping(ctx context.Context, request api.PingRequestObject) (api.PingResponseObject, error) {
