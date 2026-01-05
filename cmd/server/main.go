@@ -9,9 +9,7 @@ import (
 	"syscall"
 	"time"
 
-
-	_ "github.com/joho/godotenv/autoload"
-
+	"codeberg.org/cycas/app/internal/config"
 	"codeberg.org/cycas/app/internal/server"
 	"codeberg.org/cycas/app/internal/store/postgres"
 )
@@ -20,12 +18,12 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
 
-	connString, ok := os.LookupEnv("CYCAS_DATABASE_URL")
-	if !ok {
-		// TODO: handle case
+	cfg, err := config.Load()
+	if err != nil {
+		// TODO: handle error
 	}
 
-	store, err := postgres.New(ctx, connString)
+	store, err := postgres.New(ctx, cfg.DatabaseUrl)
 	if err != nil {
 		// TODO: handle error
 	}

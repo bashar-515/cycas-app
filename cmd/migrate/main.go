@@ -1,7 +1,16 @@
 package main
 
 import (
-	_ "github.com/joho/godotenv/autoload"
+	"fmt"
+
+	"codeberg.org/cycas/app/internal/config"
 )
 
-func main() {}
+func main() {
+	cfg, err := config.Load()
+	if err != nil {
+		// TODO: handle error
+	}
+
+	fmt.Println(cfg.DatabaseUrl)
+}
