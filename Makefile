@@ -30,12 +30,13 @@ clean-auth:
 		--remove-orphans \
 		--volumes
 
-.PHONY: up-db down-db clean-db
+.PHONY: up-db down-db clean-db migrate setup-db wait
 
 CONTAINER_NAME := cycas-db
-IMAGE_NAME := postgres
+DATABASE_USER := postgres
+DATABASE_URL := postgres://$(DATABASE_USER):mysecretpassword@localhost:5433/postgres?sslmode=disable
 
-up-db: setup-db migrate-db
+up-db: setup-db migrate
 	
 down-db:
 	podman stop --ignore $(CONTAINER_NAME)
@@ -43,12 +44,8 @@ down-db:
 clean-db:
 	podman rm --ignore $(CONTAINER_NAME)
 
-.PHONY: migrate-db
-
-DATABASE_URL := postgres://postgres:mysecretpassword@localhost:5433/postgres?sslmode=disable
-
-migrate-db: setup-db
-	CYCAS_DATABASE_URL='$(DATABASE_URL)' \
+migrate: setup-db wait
+	CYCAS_DATABASE_URL=$(DATABASE_URL) \
 		go run ./cmd/migrate
 
 setup-db:
@@ -60,26 +57,27 @@ setup-db:
 			--env POSTGRES_PASSWORD=mysecretpassword \
 			--publish 5433:5432 \
 			--detach \
-			$(IMAGE_NAME); \
+			postgres; \
 	fi
-	@until psql "$(DATABASE_URL)" -c '\q' 2>/dev/null; do \
-		sleep 1; \
-	done
 
-.PHONY: up-backend
+wait:
+	@for _ in 1 2 3 4 5 6 7 8 9; do \
+		podman exec $(CONTAINER_NAME) pg_isready -U $(DATABASE_USER) >/dev/null 2>&1 && exit 0; \
+		sleep 1; \
+	done; \
+	exit 1
+
+.PHONY: up-backend setup-backend
 
 up-backend: setup-backend
 	CYCAS_DATABASE_URL=postgres://app:mysecretpassword@localhost:5433/postgres?sslmode=disable \
 		go tool air
 
-.PHONY: setup-backend
-
 setup-backend: gen-app tidy
 
-.PHONY: gen-app gen-server gen-models
+.PHONY: gen-app gen-server gen-models gen-setup tidy
 
 GEN := go tool oapi-codegen
-
 SPEC_FILE := api/spec/openapi.yaml
 CFG_DIR := api/config/server
 
@@ -94,21 +92,15 @@ gen-server: gen-setup
 gen-spec: gen-setup
 	$(GEN) -config $(CFG_DIR)/spec.yaml $(SPEC_FILE)
 
-.PHONY: gen-setup
-
-gen-setup: tidy
-
-.PHONY: tidy
+gen-setup: 
 
 tidy:
 	go mod tidy
 
-.PHONY: up-web
+.PHONY: up-web setup-web
 
 up-web: setup-web
 	npm run dev
-
-.PHONY: setup-web
 
 setup-web: install
 
