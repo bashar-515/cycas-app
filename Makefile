@@ -4,9 +4,9 @@ include make/web.mk
 .PHONY: up down
 
 up: up-auth up-db
-	$(MAKE) -j backend-up web-up
+	$(MAKE) -j up-backend up-web
 
-down: down-db down-db
+down: db-down auth-down
 
 .PHONY: up-auth down-auth clean-auth
 
@@ -48,8 +48,10 @@ clean-db:
 
 .PHONY: db-migrate db-provision
 
+DATABASE_URL := postgres://postgres:mysecretpassword@localhost:5433/postgres?sslmode=disable
+
 db-migrate: db-provision
-	CYCAS_DATABASE_URL=postgres://postgres:mysecretpassword@localhost:5433/postgres?sslmode=disable \
+	CYCAS_DATABASE_URL='$(DATABASE_URL)' \
 		go run ./cmd/migrate
 
 db-provision: db-setup
