@@ -6,6 +6,7 @@
 1. Go
 2. Node+pnpm
 3. Podman
+4. psql
 
 ### First Run
 1. run `make auth-up` to set up the authentication service
@@ -28,3 +29,4 @@ and redirect them there
 
 2. add Playwright tests
 3. add unit and component Vitest tests
+4. add Go tests
