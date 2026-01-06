@@ -35,7 +35,7 @@ clean-auth:
 CONTAINER_NAME := cycas-db
 IMAGE_NAME := postgres
 
-up-db: db-setup db-provision db-migrate	
+up-db: db-setup db-migrate	
 	
 down-db:
 	podman stop --ignore $(CONTAINER_NAME)
@@ -47,14 +47,11 @@ clean-db:
 
 DATABASE_URL := postgres://postgres:mysecretpassword@localhost:5433/postgres?sslmode=disable
 
-db-migrate: db-provision
+migrate-db: db-setup
 	CYCAS_DATABASE_URL='$(DATABASE_URL)' \
 		go run ./cmd/migrate
 
-db-provision: db-setup
-	psql "$(DATABASE_URL)" -v ON_ERRORS_STOP=1 -f db/provision.sql
-
-db-setup:
+setup-db:
 	@if podman container exists $(CONTAINER_NAME); then \
 		podman start $(CONTAINER_NAME); \
 	else \
@@ -65,6 +62,9 @@ db-setup:
 			--detach \
 			$(IMAGE_NAME); \
 	fi
+	@until psql "$(DATABASE_URL)" -c '\q' 2>/dev/null; do \
+		sleep 1; \
+	done
 
 .PHONY: up-backend
 
@@ -85,18 +85,18 @@ CFG_DIR := api/config/server
 
 gen-app: gen-models gen-server gen-spec tidy
 
-gen-models: setup-gen
+gen-models: gen-setup
 	$(GEN) -config $(CFG_DIR)/models.yaml $(SPEC_FILE)
 
-gen-server: setup-gen
+gen-server: gen-setup
 	$(GEN) -config $(CFG_DIR)/server.yaml $(SPEC_FILE)
 
-gen-spec: setup-gen
+gen-spec: gen-setup
 	$(GEN) -config $(CFG_DIR)/spec.yaml $(SPEC_FILE)
 
-.PHONY: setup-gen
+.PHONY: gen-setup
 
-setup-gen: tidy
+gen-setup: tidy
 
 .PHONY: tidy
 
