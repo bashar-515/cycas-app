@@ -29,4 +29,4 @@ migrate: provision
 	CYCAS_DATABASE_URL='$(DATABASE_URL)' go run ./cmd/migrate
 
 provision: 
-	psql "$(DATABASE_URL)" -v ON_ERRORS_STOP=1 -f etc/db/provision.sql
+	psql "$(DATABASE_URL)" -v ON_ERRORS_STOP=1 -f db/provision.sql
