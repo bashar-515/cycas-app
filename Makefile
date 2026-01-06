@@ -67,34 +67,22 @@ wait:
 	done; \
 	exit 1
 
-.PHONY: up-backend setup-backend
+.PHONY: up-backend gen-app download tidy
 
-up-backend: setup-backend
+CFGS := models server spec
+
+up-backend: gen-app tidy
 	CYCAS_DATABASE_URL=postgres://app:mysecretpassword@localhost:5433/postgres?sslmode=disable \
 		go tool air
 
-setup-backend: gen-app
+gen-app: download
+	$(foreach cfg,$(CFGS),go tool oapi-codegen -config api/config/server/$(cfg).yaml api/spec/openapi.yaml;)
 
-.PHONY: gen-app gen-server gen-models gen-setup
-
-GEN := go tool oapi-codegen
-SPEC_FILE := api/spec/openapi.yaml
-CFG_DIR := api/config/server
-
-gen-app: gen-models gen-server gen-spec
-	go mod tidy
-
-gen-models: gen-setup
-	$(GEN) -config $(CFG_DIR)/models.yaml $(SPEC_FILE)
-
-gen-server: gen-setup
-	$(GEN) -config $(CFG_DIR)/server.yaml $(SPEC_FILE)
-
-gen-spec: gen-setup
-	$(GEN) -config $(CFG_DIR)/spec.yaml $(SPEC_FILE)
-
-gen-setup:
+download:
 	go mod download
+
+tidy:
+	go mod tidy
 
 .PHONY: up-web
 
