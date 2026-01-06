@@ -9,3 +9,7 @@ up: auth-up db-up migrate
 	$(MAKE) -j backend-up web-up
 
 down: db-down auth-down
+
+.PHONY: gen
+
+gen: gen-app gen-sdk
