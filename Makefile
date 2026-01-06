@@ -3,7 +3,7 @@
 up: up-auth up-db
 	$(MAKE) -j up-backend up-web
 
-down: db-down auth-down
+down: down-db down-auth
 
 .PHONY: up-auth down-auth clean-auth
 
@@ -35,7 +35,7 @@ clean-auth:
 CONTAINER_NAME := cycas-db
 IMAGE_NAME := postgres
 
-up-db: db-setup db-migrate	
+up-db: setup-db migrate-db
 	
 down-db:
 	podman stop --ignore $(CONTAINER_NAME)
@@ -43,11 +43,11 @@ down-db:
 clean-db:
 	podman rm --ignore $(CONTAINER_NAME)
 
-.PHONY: db-migrate db-provision
+.PHONY: migrate-db
 
 DATABASE_URL := postgres://postgres:mysecretpassword@localhost:5433/postgres?sslmode=disable
 
-migrate-db: db-setup
+migrate-db: setup-db
 	CYCAS_DATABASE_URL='$(DATABASE_URL)' \
 		go run ./cmd/migrate
 
