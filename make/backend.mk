@@ -1,7 +1,9 @@
 .PHONY: backend-up setup-backend
- 
+
+DATABASE_URL := postgres://app:mysecretpassword@localhost:5433/postgres?sslmode=disable
+
 backend-up: setup-backend
-	go tool air
+	CYCAS_DATABASE_URL='$(DATABASE_URL)' go tool air
 
 setup-backend: gen-app tidy
 

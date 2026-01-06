@@ -21,7 +21,12 @@ db-down:
 db-clean:
 	podman rm --ignore $(CONTAINER_NAME)
 
-.PHONY: migrate
+.PHONY: migrate provision
 
-migrate:
-	go run ./cmd/migrate
+DATABASE_URL := postgres://postgres:mysecretpassword@localhost:5433/postgres?sslmode=disable
+
+migrate: provision
+	CYCAS_DATABASE_URL='$(DATABASE_URL)' go run ./cmd/migrate
+
+provision: 
+	psql "$(DATABASE_URL)" -v ON_ERRORS_STOP=1 -f etc/db/provision.sql
