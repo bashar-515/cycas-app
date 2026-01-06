@@ -3,7 +3,7 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'app') THEN
     CREATE ROLE app
         LOGIN
-        PASSWORD '…';
+        PASSWORD 'mysecretpassword';
   END IF;
 END$$;
 
