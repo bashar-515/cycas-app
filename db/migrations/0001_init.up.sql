@@ -17,8 +17,8 @@ CREATE TABLE categories (
     created_at timestamptz NOT NULL DEFAULT now()
 );
 
-CREATE INDEX categories_user_id ON categories(user_id);
-CREATE UNIQUE INDEX categories_user_id_name ON categories(user_id, name);
+CREATE INDEX idx_categories_user_id ON categories(user_id);
+CREATE UNIQUE INDEX uq_categories_user_id_name ON categories(user_id, name);
 
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE users FORCE ROW LEVEL SECURITY;
@@ -37,3 +37,36 @@ CREATE POLICY categories_user_all
     FOR ALL
     USING (user_id = current_setting('app.user_id', true))
     WITH CHECK (user_id = current_setting('app.user_id', true));
+
+CREATE OR REPLACE FUNCTION enforce_category_limit()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+    DECLARE max_allowed integer;
+    DECLARE current_count integer;
+BEGIN
+    PERFORM pg_advisory_xact_lock(hashtext(NEW.user_id));
+
+    SELECT category_limit
+        INTO max_allowed
+    FROM users
+    WHERE id = NEW.user_id;
+
+    SELECT count(*)
+        INTO current_count
+    FROM categories
+    WHERE user_id = NEW.user_id;
+
+    IF current_count >= max_allowed THEN
+        RAISE EXCEPTION 'foo'
+            USING ERRCODE = 'bar';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_enforce_category_limit
+BEFORE INSERT ON categories
+FOR EACH ROW
+EXECUTE FUNCTION enforce_category_limit();
