@@ -10,7 +10,6 @@ tool (
 require (
 	github.com/getkin/kin-openapi v0.133.0
 	github.com/jackc/pgx/v5 v5.8.0
-	github.com/joho/godotenv v1.5.1
 	github.com/oapi-codegen/nethttp-middleware v1.1.2
 	github.com/oapi-codegen/runtime v1.1.2
 )
