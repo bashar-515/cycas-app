@@ -18,15 +18,21 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.test
+!.env.template
 
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 #directories
-/bin/
-/gen/
-/tmp/
+bin/
+gen/
+tmp/
+
+.terraform/
 
 # files
-/etc/docker/login-client.pat
+etc/docker/login-client.pat
+
+terraform.tfvars
+terraform.tfstate*
