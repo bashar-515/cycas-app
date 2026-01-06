@@ -6,7 +6,7 @@
 1. Go: run server
 2. Node+pnpm: run frontend
 3. Podman: run authentication service and database
-4. psql: run db/provision.sql agains database
+4. psql: run db/provision.sql against database
 5. openapi-generator: generate SDK
 
 ### First Run
