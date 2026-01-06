@@ -1,6 +1,3 @@
-include make/backend.mk
-include make/web.mk
-
 .PHONY: up down
 
 up: up-auth up-db
