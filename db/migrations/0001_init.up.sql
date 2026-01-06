@@ -26,8 +26,8 @@ ALTER TABLE users FORCE ROW LEVEL SECURITY;
 CREATE POLICY users_all
     ON users
     FOR ALL
-    USING (id = current_setting('app.user_id', true))
-    WITH CHECK (id = current_setting('app.user_id', true));
+    USING (id = current_setting('auth.user_id', true))
+    WITH CHECK (id = current_setting('auth.user_id', true));
 
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE categories FORCE ROW LEVEL SECURITY;
@@ -35,8 +35,8 @@ ALTER TABLE categories FORCE ROW LEVEL SECURITY;
 CREATE POLICY categories_user_all
     ON categories
     FOR ALL
-    USING (user_id = current_setting('app.user_id', true))
-    WITH CHECK (user_id = current_setting('app.user_id', true));
+    USING (user_id = current_setting('auth.user_id', true))
+    WITH CHECK (user_id = current_setting('auth.user_id', true));
 
 CREATE OR REPLACE FUNCTION enforce_category_limit()
 RETURNS TRIGGER
