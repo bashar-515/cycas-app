@@ -24,12 +24,12 @@ resource "cloudflare_pages_project" "main" {
         owner = "bashar-515"
 
         path_includes = [
-          "public/**",
+          "site/public/**",
         ]
 
         production_branch = "main"
         production_deployments_enabled = true
-        repo_name = "cycas-site"
+        repo_name = "cycas-app"
       }
     }
 }
