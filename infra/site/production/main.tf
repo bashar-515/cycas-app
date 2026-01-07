@@ -4,7 +4,7 @@ resource "cloudflare_pages_project" "main" {
     production_branch = "main"
 
     build_config = {
-      root_dir = "public"
+      root_dir = "site/public"
     }
 
     deployment_configs = {
